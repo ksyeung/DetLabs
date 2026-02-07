@@ -5,6 +5,8 @@ Go to https://dataexplorer.azure.com, then create a free ADX cluster account and
 
 The telemetry was collected during execution of `fsquirt.exe`, which runs the GUI for the Bluetooth File Transfer Wizard. I used mhaskar's proof of concept located [here](https://github.com/mhaskar/FsquirtCPLPoC). See similar Windows Living off the Land techniques [here](https://lolbas-project.github.io).
 
+In this telemetry, the attacker brings their own `fsquirt.exe` with `bthprops.cpl`. However, this is not strictly necessary: they can set the permanent working dir to the location of `bthprops.cpl`, then launch `C:\Windows\System32\fsquirt.exe` to effectively sideload it.
+
 Here is a detection for this technique:
 
 ```
@@ -23,3 +25,9 @@ DeviceImageLoadEvents
 | project
     Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessFolderPath, InitiatingProcessCommandLine, InitiatingProcessAccountName
 ```
+
+Output:
+
+| Timestamp | DeviceName | FileName | FolderPath | SHA256 | InitiatingProcessFileName | InitiatingProcessFolderPath | InitiatingProcessCommandLine | InitiatingProcessAccountName |
+|---|---|---|---|---|---|---|---|---|
+| 2026-02-06T23:50:26.491Z | jd-win11-22h2-1.ludus.domain | bthprops.cpl | C:\Users\domainuser\Downloads\bthprops.cpl | dbd8c27bc7b0390c2c676179cd516b554ef7101dff698762e1fd66d258c93439 | fsquirt.exe | c:\users\domainuser\downloads\fsquirt.exe | "fsquirt.exe" | domainuser |
