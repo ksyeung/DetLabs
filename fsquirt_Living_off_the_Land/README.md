@@ -1,4 +1,9 @@
-# fsquirt Living off the Land
+# How do I use this?
+Go to https://dataexplorer.azure.com, then create a free ADX cluster account and a new database. Copy the [init.kql](https://github.com/ksyeung/DetLabs/blob/main/fsquirt_Living_off_the_Land/init.kql) data in this folder and paste it into the ADX web UI query window. This will create the required tables, ASIM parsers, helper functions, and start ingestion of the telemetry (WindowsEvent[...].parquet, etc).
+
+# fsquirt.exe Living off the Land
+
+The telemetry was collected during execution of `fsquirt.exe`, which runs the GUI for the Bluetooth File Transfer Wizard. I used mhaskar's proof of concept located [here](https://github.com/mhaskar/FsquirtCPLPoC). See similar Windows Living off the Land techniques [here](https://lolbas-project.github.io).
 
 Here are some detections for this technique.
 
@@ -28,7 +33,7 @@ DeviceImageLoadEvents
 ```
 
 
-Using an ASIM parser (uses an MDE table) and Sysmon Event ID 7 (no MDE):
+Using an ASIM parser (uses Sysmon and an MDE table) and Sysmon Event ID 7 (no MDE):
 ```
 // Find EXE + CPL created in same folder within 1 minute
 let fileCreations =                                                                                
