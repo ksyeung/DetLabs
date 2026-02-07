@@ -11,7 +11,7 @@ Here's a simplified Mermaid data flow diagram:
 flowchart LR
       subgraph Sources
           W[Winlogbeat] --> L[Logstash] --> J1[JSON files]
-          M[Microsoft for Defender] --> J2[JSON files]
+          M[Microsoft for Defender Endpoint] --> J2[JSON files]
           Z[Zeek/Corelight via Filebeat] --> L
       end
 
