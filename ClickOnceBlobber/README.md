@@ -80,9 +80,9 @@ Unfortunately, we don't have the [FileProfile() function](https://learn.microsof
 WindowsEvent
 | where Provider == "Microsoft-Windows-Sysmon" and EventID == 7
 | extend Image = tostring(EventData.Image),
-         ImageLoaded = tostring(EventData.ImageLoaded)
+         ImageLoaded = tostring(EventData.ImageLoaded),
          Signed = tostring(EventData.Signed),
-         SignatureStatus = tostring(EventData.SignatureStatus)
+         SignatureStatus = tostring(EventData.SignatureStatus),
          Hashes = tostring(EventData.Hashes)
 | where Image endswith "TestClickOnce.exe"
 | where ImageLoaded has @"\AppData\Local\Apps\2.0\"
@@ -232,7 +232,35 @@ The first two rows show the ClickOnce deployment service `dfsvc.exe` connecting 
 The last row shows C2 activity where `testclickonce.exe` reaches out to `9082489234.blob.core.windows.net` over port 443.
 
 # Detections
-No legitimate ClickOnce deployment should create a `.exe.config` in the cache following installation:
+If you don't have ClickOnce applications in your environment after baselining (see the analysis for a query), you can check for any unsigned modules loaded by a ClickOnce application. This is based on the Sigma rule [Unsigned Module Loaded by ClickOnce Application](https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_susp_clickonce_unsigned_module_loaded.yml). This rule currently has a `test` status in the repo.
+
+```kql
+WindowsEvent
+| where Provider == "Microsoft-Windows-Sysmon" and EventID == 7
+| extend Image = tostring(EventData.Image),
+         ImageLoaded = tostring(EventData.ImageLoaded),
+         Signed = tostring(EventData.Signed),
+         SignatureStatus = tostring(EventData.SignatureStatus),
+         Hashes = tostring(EventData.Hashes)
+| where Image has @"\AppData\Local\Apps\2.0\"
+| where Signed == "false" or SignatureStatus == "Expired"
+| project TimeGenerated, Computer, Image, ImageLoaded, Signed, SignatureStatus, Hashes
+```
+
+There is another the Sigma rule, [Potentially Suspicious Child Process Of ClickOnce Application](https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dfsvc_suspicious_child_processes.yml). This is also in a `test` status.
+
+```kql
+DeviceProcessEvents
+| where InitiatingProcessFolderPath has @"\AppData\Local\Apps\2.0\"
+| where FileName in~ (
+    "calc.exe", "cmd.exe", "cscript.exe", "explorer.exe", "mshta.exe",
+    "net.exe", "net1.exe", "nltest.exe", "notepad.exe", "powershell.exe",
+    "pwsh.exe", "reg.exe", "regsvr32.exe", "rundll32.exe", "schtasks.exe",
+    "werfault.exe", "wscript.exe"
+)
+```
+
+You may also detect on creation of a `.exe.config` file in the ClickOnce cache following installation:
 ```kql
 DeviceFileEvents
 | where InitiatingProcessFileName == "dfsvc.exe"
@@ -271,7 +299,7 @@ _ASim_ProcessCreate
 
 <br>
 
-SloppyLemming doesn't rely solely on AppDomainManager injection via `dfsvc.exe`. After the ClickOnce manifest delivers the payload, a DLL sideloading package is dropped with a legitimate .NET binary (`NGGenTask.exe` or `phoneactivate.exe`) paired with a malicious loader DLL `mscorsvc.dll`. This happens after ClickOnce deployment and  outside of the `Apps\2.0` cache. Given this, we could look for a legitimate Microsoft binary loading unsigned DLLs from a user-writable path:
+SloppyLemming doesn't rely solely on AppDomainManager injection via `dfsvc.exe`. After the ClickOnce manifest delivers the payload, a DLL sideloading package is dropped with a legitimate .NET binary (`NGGenTask.exe` or `phoneactivate.exe`) paired with a malicious loader DLL `mscorsvc.dll`. This happens after ClickOnce deployment and  outside of the `Apps\2.0` cache. Given this, we could look for a legitimate Microsoft binary loading unsigned DLLs from a user-writable path. This will be very noisy unless your environment is very buttoned up:
 
 ```
 let SideloadTargets = dynamic([
@@ -305,13 +333,13 @@ _ASim_ProcessCreate
     TargetProcessCurrentDirectory
 ```
 
-These detections have many gaps when you look at other uses of ClickOnce in the wild:
+Aside from the first detection, I'm not so sure about the quality of these queries overall. ClickOnce applications appear difficult to secure. There are even more gaps when you look at other uses of ClickOnce in the wild:
 
 - The `OneClik` exercise by Trellix hides their C2 behind CloudFront, API Gateway, and lambda. 
 - SloppyLemming uses more than 100 Cloudflare Workers domains and the BurrowShell traffic is disguised as Windows Update comms. 
 - The Acronis research identifies use of ClickOnce runners that connect directly to a ScreenConnect server to fetch components.
 
-I leave further detection engineering for those campaigns as an exercise for the reader. There are many references below if you're interested in more research on ClickOnce abuse.
+I leave further detection engineering as an exercise for the reader. I welcome pull requests if you'd like to submit something for inclusion. There are many references below if you're interested in more research on ClickOnce abuse.
 
 ---
 
@@ -324,13 +352,15 @@ Acronis, [Trojanized ScreenConnect installers evolve, dropping multiple RATs on 
 
 Hunt.io, [AsyncRAT Campaigns Uncovered: How Attackers Abuse ScreenConnect and Open Directories](https://hunt.io/blog/asyncrat-screenconnect-open-directory-campaigns)
 
+Cloudflare CloudForce One, [Unraveling SloppyLemming's Operations Across South Asia](https://www.cloudflare.com/cloudforce-one/research/unraveling-sloppylemmings-operations-across-south-asia/)
+
+QiAnXin, [APT-Q-14 Group Combines 0day and ClickOnce Technology to Carry Out Espionage Activities](https://ti.qianxin.com/blog/articles/apt-q-14-group-combines-0day-and-clickonce-technology-to-carry-out-espionage-activities-en/)
+
 Pentest Laboratories, [AppDomainManager Injection and Detection](https://pentestlaboratories.com/2020/05/26/appdomainmanager-injection-and-detection)
 
 Mehmet Ergene, [Querying Azure Resource Graph Without Limits Using KQL](https://academy.bluraven.io/blog/querying-azure-resource-graph-without-limits-using-kql)
 
-Cloudflare CloudForce One, [Unraveling SloppyLemming's Operations Across South Asia](https://www.cloudflare.com/cloudforce-one/research/unraveling-sloppylemmings-operations-across-south-asia/)
-
-QiAnXin, [APT-Q-14 Group Combines 0day and ClickOnce Technology to Carry Out Espionage Activities](https://ti.qianxin.com/blog/articles/apt-q-14-group-combines-0day-and-clickonce-technology-to-carry-out-espionage-activities-en/)
+Specter Ops, [Less SmartScreen More Caffeine: (Ab)Using ClickOnce for Trusted Code Execution](https://specterops.io/blog/2023/06/07/less-smartscreen-more-caffeine-abusing-clickonce-for-trusted-code-execution)
 
 Microsoft, [ClickOnce Security and Deployment](https://learn.microsoft.com/en-us/visualstudio/deployment/clickonce-security-and-deployment)
 
