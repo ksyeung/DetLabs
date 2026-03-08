@@ -236,7 +236,6 @@ No legitimate ClickOnce deployment should create a `.exe.config` in the cache fo
 ```kql
 DeviceFileEvents
 | where InitiatingProcessFileName == "dfsvc.exe"
-| where InitiatingProcessVersionInfoCompanyName == "Microsoft Corporation"
 | where FolderPath has @"\AppData\Local\Apps\2.0\"
 | where FileName endswith ".exe.config"
 | project 
