@@ -11,8 +11,7 @@ Pre-requisites:
 - Download the 7z LZMA SDK from https://7-zip.org/sdk.html
 - Download a ScreenConnect client installer (MSI). If you're not a current customer, you may be able to obtain a free seven day trial. Note that they won't permit registration by addresses from a domain used by free email services (such as Gmail, Yahoo, Yandex, etc) owing to widespread abuse by threat actors.
 Then:
-- Extract the contents of `version_one.7z` to the `/bin` dir of the SDK e.g. `/lzma2501/bin/`
-- Run `cr.bat` to create a self-extracting archive with 7z using LZMA at max compression that embeds the MSI. The archive will have a `.scr` file extension
+- Write a batch file to create a self-extracting archive with 7z using LZMA at max compression that embeds the MSI. The archive will have a `.scr` file extension
 
 
 Now, let's take a quick look at the first line of the batch script `cr.bat`:
