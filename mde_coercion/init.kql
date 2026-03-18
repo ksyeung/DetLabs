@@ -1,6 +1,6 @@
 .execute database script <|
 .drop functions (_GetWatchlist, _ASIM_GetUsernameType, _ASIM_GetWindowsUserType, _ASIM_ResolveDstFQDN, _ASIM_ResolveDvcFQDN, _ASIM_ResolveFQDN, _ASIM_ResolveSrcFQDN, ASimAuditEvent, ASimAuditEventMicrosoftSecurityEvents, ASimAuditEventMicrosoftWindowsEvents, imAuditEvent, vimAuditEventEmpty, vimAuditEventMicrosoftSecurityEvents, vimAuditEventMicrosoftWindowsEvents, ASimAuthentication, ASimAuthenticationM365Defender, ASimAuthenticationMicrosoftWindowsEvent, imAuthentication, vimAuthenticationEmpty, vimAuthenticationM365Defender, vimAuthenticationMicrosoftWindowsEvent, ASimDns, ASimDnsCorelightZeek, ASimDnsMicrosoft365Defender, ASimDnsMicrosoftSysmonWindowsEvent, imDns, vimDnsCorelightZeek, vimDnsEmpty, vimDnsMicrosoft365Defender, vimDnsMicrosoftSysmonWindowsEvent, ASimFileEvent, ASimFileEventMicrosoft365D, ASimFileEventMicrosoftSecurityEvents, ASimFileEventMicrosoftSysmonWindowsEvent, ASimFileEventMicrosoftWindowsEvents, imFileEvent, vimFileEventEmpty, vimFileEventMicrosoft365D, vimFileEventMicrosoftSecurityEvents, vimFileEventMicrosoftSysmonWindowsEvent, vimFileEventMicrosoftWindowsEvents, ASimNetworkSession, ASimNetworkSessionCorelightZeek, ASimNetworkSessionMicrosoft365Defender, ASimNetworkSessionMicrosoftSecurityEventFirewall, ASimNetworkSessionMicrosoftSysmonWindowsEvent, ASimNetworkSessionMicrosoftWindowsEventFirewall, imNetworkSession, vimNetworkSessionCorelightZeek, vimNetworkSessionEmpty, vimNetworkSessionMicrosoft365Defender, vimNetworkSessionMicrosoftSecurityEventFirewall, vimNetworkSessionMicrosoftSysmonWindowsEvent, vimNetworkSessionMicrosoftWindowsEventFirewall, ASimProcessCreateMicrosoftSecurityEvents, ASimProcessCreateMicrosoftWindowsEvents, ASimProcessEvent, ASimProcessEventCreate, ASimProcessEventCreateMicrosoftSysmonWindowsEvent, ASimProcessEventMicrosoft365D, ASimProcessEventTerminate, ASimProcessEventTerminateMicrosoftSysmonWindowsEvent, ASimProcessTerminateMicrosoftSecurityEvents, ASimProcessTerminateMicrosoftWindowsEvents, imProcessCreate, imProcessEvent, imProcessTerminate, vimProcessCreateMicrosoftSecurityEvents, vimProcessCreateMicrosoftWindowsEvents, vimProcessEmpty, vimProcessEventCreateMicrosoftSysmonWindowsEvent, vimProcessEventMicrosoft365D, vimProcessEventTerminateMicrosoftSysmonWindowsEvent, vimProcessTerminateMicrosoftSecurityEvents, vimProcessTerminateMicrosoftWindowsEvents, ASimRegistry, ASimRegistryEventMicrosoft365D, ASimRegistryEventMicrosoftSecurityEvent, ASimRegistryEventMicrosoftSysmonWindowsEvent, ASimRegistryEventMicrosoftWindowsEvent, imRegistry, vimRegistryEventEmpty, vimRegistryEventMicrosoft365D, vimRegistryEventMicrosoftSecurityEvent, vimRegistryEventMicrosoftSysmonWindowsEvent, vimRegistryEventMicrosoftWindowsEvent, _ASim_Authentication, _ASim_Dns, _ASim_NetworkSession, _ASim_ProcessEvent, _ASim_ProcessCreate, _ASim_ProcessTerminate, _ASim_FileEvent, _ASim_RegistryEvent, _ASim_AuditEvent, _Im_Authentication, _Im_Dns, _Im_NetworkSession, _Im_ProcessEvent, _Im_ProcessCreate, _Im_ProcessTerminate, _Im_FileEvent, _Im_RegistryEvent, _Im_AuditEvent) ifexists
-.drop tables (Corelight_CL, DeviceEvents, DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceLogonEvents, DeviceImageLoadEvents, DeviceRegistryEvents, DeviceInfo, DeviceNetworkInfo, DeviceFileCertificateInfo, SecurityEvent, Suricata_CL, WindowsEvent) ifexists
+.drop tables (Corelight_CL, DeviceEvents, DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceLogonEvents, DeviceImageLoadEvents, DeviceRegistryEvents, DeviceInfo, DeviceNetworkInfo, DeviceFileCertificateInfo, AlertInfo, AlertEvidence, BehaviorInfo, BehaviorEntities, IdentityLogonEvents, IdentityQueryEvents, IdentityDirectoryEvents, DeviceTvmSecureConfigurationAssessment, SecurityEvent, Suricata_CL, WindowsEvent) ifexists
 .create-merge table Corelight_CL (
     TimeGenerated: datetime,  log_type: string,
     uid: string,              id_orig_h: string,
@@ -752,6 +752,345 @@
     {"column":"ReportId","path":"$.ReportId","datatype":"long"}
 ]
 ```
+.create-merge table AlertInfo (
+    Timestamp: datetime,                    AlertId: string,
+    Title: string,                          Category: string,
+    Severity: string,                       ServiceSource: string,
+    DetectionSource: string,                AttackTechniques: string,
+    SentinelWorkspaceIds: string
+)
+.create-or-alter table AlertInfo ingestion json mapping 'AlertInfoMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"AlertId","path":"$.AlertId","datatype":"string"},
+    {"column":"Title","path":"$.Title","datatype":"string"},
+    {"column":"Category","path":"$.Category","datatype":"string"},
+    {"column":"Severity","path":"$.Severity","datatype":"string"},
+    {"column":"ServiceSource","path":"$.ServiceSource","datatype":"string"},
+    {"column":"DetectionSource","path":"$.DetectionSource","datatype":"string"},
+    {"column":"AttackTechniques","path":"$.AttackTechniques","datatype":"string"},
+    {"column":"SentinelWorkspaceIds","path":"$.SentinelWorkspaceIds","datatype":"string"}
+]
+```
+.create-merge table AlertEvidence (
+    Timestamp: datetime,                    AlertId: string,
+    Title: string,                          Categories: string,
+    AttackTechniques: string,               ServiceSource: string,
+    DetectionSource: string,                EntityType: string,
+    EvidenceRole: string,                   EvidenceDirection: string,
+    FileName: string,                       FolderPath: string,
+    SHA1: string,                           SHA256: string,
+    FileSize: long,                         ThreatFamily: string,
+    RemoteIP: string,                       RemoteUrl: string,
+    AccountName: string,                    AccountDomain: string,
+    AccountSid: string,                     AccountObjectId: string,
+    AccountUpn: string,                     DeviceId: string,
+    DeviceName: string,                     LocalIP: string,
+    NetworkMessageId: string,               EmailSubject: string,
+    Application: string,                    ApplicationId: long,
+    OAuthApplicationId: string,             ProcessCommandLine: string,
+    RegistryKey: string,                    RegistryValueName: string,
+    RegistryValueData: string,              AdditionalFields: dynamic,
+    Severity: string,                       CloudResource: string,
+    CloudPlatform: string,                  ResourceType: string,
+    ResourceID: string,                     SubscriptionId: string,
+    SentinelWorkspaceIds: string
+)
+.create-or-alter table AlertEvidence ingestion json mapping 'AlertEvidenceMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"AlertId","path":"$.AlertId","datatype":"string"},
+    {"column":"Title","path":"$.Title","datatype":"string"},
+    {"column":"Categories","path":"$.Categories","datatype":"string"},
+    {"column":"AttackTechniques","path":"$.AttackTechniques","datatype":"string"},
+    {"column":"ServiceSource","path":"$.ServiceSource","datatype":"string"},
+    {"column":"DetectionSource","path":"$.DetectionSource","datatype":"string"},
+    {"column":"EntityType","path":"$.EntityType","datatype":"string"},
+    {"column":"EvidenceRole","path":"$.EvidenceRole","datatype":"string"},
+    {"column":"EvidenceDirection","path":"$.EvidenceDirection","datatype":"string"},
+    {"column":"FileName","path":"$.FileName","datatype":"string"},
+    {"column":"FolderPath","path":"$.FolderPath","datatype":"string"},
+    {"column":"SHA1","path":"$.SHA1","datatype":"string"},
+    {"column":"SHA256","path":"$.SHA256","datatype":"string"},
+    {"column":"FileSize","path":"$.FileSize","datatype":"long"},
+    {"column":"ThreatFamily","path":"$.ThreatFamily","datatype":"string"},
+    {"column":"RemoteIP","path":"$.RemoteIP","datatype":"string"},
+    {"column":"RemoteUrl","path":"$.RemoteUrl","datatype":"string"},
+    {"column":"AccountName","path":"$.AccountName","datatype":"string"},
+    {"column":"AccountDomain","path":"$.AccountDomain","datatype":"string"},
+    {"column":"AccountSid","path":"$.AccountSid","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"DeviceId","path":"$.DeviceId","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"LocalIP","path":"$.LocalIP","datatype":"string"},
+    {"column":"NetworkMessageId","path":"$.NetworkMessageId","datatype":"string"},
+    {"column":"EmailSubject","path":"$.EmailSubject","datatype":"string"},
+    {"column":"Application","path":"$.Application","datatype":"string"},
+    {"column":"ApplicationId","path":"$.ApplicationId","datatype":"long"},
+    {"column":"OAuthApplicationId","path":"$.OAuthApplicationId","datatype":"string"},
+    {"column":"ProcessCommandLine","path":"$.ProcessCommandLine","datatype":"string"},
+    {"column":"RegistryKey","path":"$.RegistryKey","datatype":"string"},
+    {"column":"RegistryValueName","path":"$.RegistryValueName","datatype":"string"},
+    {"column":"RegistryValueData","path":"$.RegistryValueData","datatype":"string"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"},
+    {"column":"Severity","path":"$.Severity","datatype":"string"},
+    {"column":"CloudResource","path":"$.CloudResource","datatype":"string"},
+    {"column":"CloudPlatform","path":"$.CloudPlatform","datatype":"string"},
+    {"column":"ResourceType","path":"$.ResourceType","datatype":"string"},
+    {"column":"ResourceID","path":"$.ResourceID","datatype":"string"},
+    {"column":"SubscriptionId","path":"$.SubscriptionId","datatype":"string"},
+    {"column":"SentinelWorkspaceIds","path":"$.SentinelWorkspaceIds","datatype":"string"}
+]
+```
+.create-merge table BehaviorInfo (
+    Timestamp: datetime,                    BehaviorId: string,
+    ActionType: string,                     Description: string,
+    Categories: string,                     AttackTechniques: string,
+    ServiceSource: string,                  DetectionSource: string,
+    DataSources: string,                    DeviceId: string,
+    AccountUpn: string,                     AccountObjectId: string,
+    StartTime: datetime,                    EndTime: datetime,
+    AdditionalFields: dynamic
+)
+.create-or-alter table BehaviorInfo ingestion json mapping 'BehaviorInfoMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"BehaviorId","path":"$.BehaviorId","datatype":"string"},
+    {"column":"ActionType","path":"$.ActionType","datatype":"string"},
+    {"column":"Description","path":"$.Description","datatype":"string"},
+    {"column":"Categories","path":"$.Categories","datatype":"string"},
+    {"column":"AttackTechniques","path":"$.AttackTechniques","datatype":"string"},
+    {"column":"ServiceSource","path":"$.ServiceSource","datatype":"string"},
+    {"column":"DetectionSource","path":"$.DetectionSource","datatype":"string"},
+    {"column":"DataSources","path":"$.DataSources","datatype":"string"},
+    {"column":"DeviceId","path":"$.DeviceId","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"StartTime","path":"$.StartTime","datatype":"datetime"},
+    {"column":"EndTime","path":"$.EndTime","datatype":"datetime"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
+]
+```
+.create-merge table BehaviorEntities (
+    Timestamp: datetime,                    BehaviorId: string,
+    ActionType: string,                     Categories: string,
+    ServiceSource: string,                  DetectionSource: string,
+    DataSources: string,                    EntityType: string,
+    EntityRole: string,                     DetailedEntityRole: string,
+    FileName: string,                       FolderPath: string,
+    SHA1: string,                           SHA256: string,
+    FileSize: long,                         ThreatFamily: string,
+    RemoteIP: string,                       RemoteUrl: string,
+    AccountName: string,                    AccountDomain: string,
+    AccountSid: string,                     AccountObjectId: string,
+    AccountUpn: string,                     DeviceId: string,
+    DeviceName: string,                     LocalIP: string,
+    NetworkMessageId: string,               EmailSubject: string,
+    EmailClusterId: string,                 Application: string,
+    ApplicationId: long,                    OAuthApplicationId: string,
+    ProcessCommandLine: string,             RegistryKey: string,
+    RegistryValueName: string,              RegistryValueData: string,
+    AdditionalFields: dynamic
+)
+.create-or-alter table BehaviorEntities ingestion json mapping 'BehaviorEntitiesMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"BehaviorId","path":"$.BehaviorId","datatype":"string"},
+    {"column":"ActionType","path":"$.ActionType","datatype":"string"},
+    {"column":"Categories","path":"$.Categories","datatype":"string"},
+    {"column":"ServiceSource","path":"$.ServiceSource","datatype":"string"},
+    {"column":"DetectionSource","path":"$.DetectionSource","datatype":"string"},
+    {"column":"DataSources","path":"$.DataSources","datatype":"string"},
+    {"column":"EntityType","path":"$.EntityType","datatype":"string"},
+    {"column":"EntityRole","path":"$.EntityRole","datatype":"string"},
+    {"column":"DetailedEntityRole","path":"$.DetailedEntityRole","datatype":"string"},
+    {"column":"FileName","path":"$.FileName","datatype":"string"},
+    {"column":"FolderPath","path":"$.FolderPath","datatype":"string"},
+    {"column":"SHA1","path":"$.SHA1","datatype":"string"},
+    {"column":"SHA256","path":"$.SHA256","datatype":"string"},
+    {"column":"FileSize","path":"$.FileSize","datatype":"long"},
+    {"column":"ThreatFamily","path":"$.ThreatFamily","datatype":"string"},
+    {"column":"RemoteIP","path":"$.RemoteIP","datatype":"string"},
+    {"column":"RemoteUrl","path":"$.RemoteUrl","datatype":"string"},
+    {"column":"AccountName","path":"$.AccountName","datatype":"string"},
+    {"column":"AccountDomain","path":"$.AccountDomain","datatype":"string"},
+    {"column":"AccountSid","path":"$.AccountSid","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"DeviceId","path":"$.DeviceId","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"LocalIP","path":"$.LocalIP","datatype":"string"},
+    {"column":"NetworkMessageId","path":"$.NetworkMessageId","datatype":"string"},
+    {"column":"EmailSubject","path":"$.EmailSubject","datatype":"string"},
+    {"column":"EmailClusterId","path":"$.EmailClusterId","datatype":"string"},
+    {"column":"Application","path":"$.Application","datatype":"string"},
+    {"column":"ApplicationId","path":"$.ApplicationId","datatype":"long"},
+    {"column":"OAuthApplicationId","path":"$.OAuthApplicationId","datatype":"string"},
+    {"column":"ProcessCommandLine","path":"$.ProcessCommandLine","datatype":"string"},
+    {"column":"RegistryKey","path":"$.RegistryKey","datatype":"string"},
+    {"column":"RegistryValueName","path":"$.RegistryValueName","datatype":"string"},
+    {"column":"RegistryValueData","path":"$.RegistryValueData","datatype":"string"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
+]
+```
+.create-merge table IdentityLogonEvents (
+    Timestamp: datetime,                    ActionType: string,
+    Application: string,                    LogonType: string,
+    Protocol: string,                       FailureReason: string,
+    AccountName: string,                    AccountDomain: string,
+    AccountUpn: string,                     AccountSid: string,
+    AccountObjectId: string,                AccountDisplayName: string,
+    DeviceName: string,                     DeviceType: string,
+    OSPlatform: string,                     IPAddress: string,
+    Port: int,                              DestinationDeviceName: string,
+    DestinationIPAddress: string,           DestinationPort: int,
+    TargetDeviceName: string,               TargetAccountDisplayName: string,
+    Location: string,                       ISP: string,
+    ReportId: string,                       UncommonForUser: string,
+    LastSeenForUser: string,                AdditionalFields: dynamic
+)
+.create-or-alter table IdentityLogonEvents ingestion json mapping 'IdentityLogonEventsMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"ActionType","path":"$.ActionType","datatype":"string"},
+    {"column":"Application","path":"$.Application","datatype":"string"},
+    {"column":"LogonType","path":"$.LogonType","datatype":"string"},
+    {"column":"Protocol","path":"$.Protocol","datatype":"string"},
+    {"column":"FailureReason","path":"$.FailureReason","datatype":"string"},
+    {"column":"AccountName","path":"$.AccountName","datatype":"string"},
+    {"column":"AccountDomain","path":"$.AccountDomain","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"AccountSid","path":"$.AccountSid","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"AccountDisplayName","path":"$.AccountDisplayName","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"DeviceType","path":"$.DeviceType","datatype":"string"},
+    {"column":"OSPlatform","path":"$.OSPlatform","datatype":"string"},
+    {"column":"IPAddress","path":"$.IPAddress","datatype":"string"},
+    {"column":"Port","path":"$.Port","datatype":"int"},
+    {"column":"DestinationDeviceName","path":"$.DestinationDeviceName","datatype":"string"},
+    {"column":"DestinationIPAddress","path":"$.DestinationIPAddress","datatype":"string"},
+    {"column":"DestinationPort","path":"$.DestinationPort","datatype":"int"},
+    {"column":"TargetDeviceName","path":"$.TargetDeviceName","datatype":"string"},
+    {"column":"TargetAccountDisplayName","path":"$.TargetAccountDisplayName","datatype":"string"},
+    {"column":"Location","path":"$.Location","datatype":"string"},
+    {"column":"ISP","path":"$.ISP","datatype":"string"},
+    {"column":"ReportId","path":"$.ReportId","datatype":"string"},
+    {"column":"UncommonForUser","path":"$.UncommonForUser","datatype":"string"},
+    {"column":"LastSeenForUser","path":"$.LastSeenForUser","datatype":"string"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
+]
+```
+.create-merge table IdentityQueryEvents (
+    Timestamp: datetime,                    ActionType: string,
+    Application: string,                    QueryType: string,
+    QueryTarget: string,                    Query: string,
+    Protocol: string,                       AccountName: string,
+    AccountDomain: string,                  AccountUpn: string,
+    AccountSid: string,                     AccountObjectId: string,
+    AccountDisplayName: string,             DeviceName: string,
+    IPAddress: string,                      Port: int,
+    DestinationDeviceName: string,          DestinationIPAddress: string,
+    DestinationPort: int,                   TargetDeviceName: string,
+    TargetAccountUpn: string,               TargetAccountDisplayName: string,
+    Location: string,                       ReportId: string,
+    AdditionalFields: dynamic
+)
+.create-or-alter table IdentityQueryEvents ingestion json mapping 'IdentityQueryEventsMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"ActionType","path":"$.ActionType","datatype":"string"},
+    {"column":"Application","path":"$.Application","datatype":"string"},
+    {"column":"QueryType","path":"$.QueryType","datatype":"string"},
+    {"column":"QueryTarget","path":"$.QueryTarget","datatype":"string"},
+    {"column":"Query","path":"$.Query","datatype":"string"},
+    {"column":"Protocol","path":"$.Protocol","datatype":"string"},
+    {"column":"AccountName","path":"$.AccountName","datatype":"string"},
+    {"column":"AccountDomain","path":"$.AccountDomain","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"AccountSid","path":"$.AccountSid","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"AccountDisplayName","path":"$.AccountDisplayName","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"IPAddress","path":"$.IPAddress","datatype":"string"},
+    {"column":"Port","path":"$.Port","datatype":"int"},
+    {"column":"DestinationDeviceName","path":"$.DestinationDeviceName","datatype":"string"},
+    {"column":"DestinationIPAddress","path":"$.DestinationIPAddress","datatype":"string"},
+    {"column":"DestinationPort","path":"$.DestinationPort","datatype":"int"},
+    {"column":"TargetDeviceName","path":"$.TargetDeviceName","datatype":"string"},
+    {"column":"TargetAccountUpn","path":"$.TargetAccountUpn","datatype":"string"},
+    {"column":"TargetAccountDisplayName","path":"$.TargetAccountDisplayName","datatype":"string"},
+    {"column":"Location","path":"$.Location","datatype":"string"},
+    {"column":"ReportId","path":"$.ReportId","datatype":"string"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
+]
+```
+.create-merge table IdentityDirectoryEvents (
+    Timestamp: datetime,                    ActionType: string,
+    Application: string,                    TargetAccountUpn: string,
+    TargetAccountDisplayName: string,       TargetDeviceName: string,
+    DestinationDeviceName: string,          DestinationIPAddress: string,
+    DestinationPort: int,                   Protocol: string,
+    AccountName: string,                    AccountDomain: string,
+    AccountUpn: string,                     AccountSid: string,
+    AccountObjectId: string,                AccountDisplayName: string,
+    DeviceName: string,                     IPAddress: string,
+    Port: int,                              Location: string,
+    ISP: string,                            ReportId: string,
+    AdditionalFields: dynamic
+)
+.create-or-alter table IdentityDirectoryEvents ingestion json mapping 'IdentityDirectoryEventsMapping' ```
+[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"ActionType","path":"$.ActionType","datatype":"string"},
+    {"column":"Application","path":"$.Application","datatype":"string"},
+    {"column":"TargetAccountUpn","path":"$.TargetAccountUpn","datatype":"string"},
+    {"column":"TargetAccountDisplayName","path":"$.TargetAccountDisplayName","datatype":"string"},
+    {"column":"TargetDeviceName","path":"$.TargetDeviceName","datatype":"string"},
+    {"column":"DestinationDeviceName","path":"$.DestinationDeviceName","datatype":"string"},
+    {"column":"DestinationIPAddress","path":"$.DestinationIPAddress","datatype":"string"},
+    {"column":"DestinationPort","path":"$.DestinationPort","datatype":"int"},
+    {"column":"Protocol","path":"$.Protocol","datatype":"string"},
+    {"column":"AccountName","path":"$.AccountName","datatype":"string"},
+    {"column":"AccountDomain","path":"$.AccountDomain","datatype":"string"},
+    {"column":"AccountUpn","path":"$.AccountUpn","datatype":"string"},
+    {"column":"AccountSid","path":"$.AccountSid","datatype":"string"},
+    {"column":"AccountObjectId","path":"$.AccountObjectId","datatype":"string"},
+    {"column":"AccountDisplayName","path":"$.AccountDisplayName","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"IPAddress","path":"$.IPAddress","datatype":"string"},
+    {"column":"Port","path":"$.Port","datatype":"int"},
+    {"column":"Location","path":"$.Location","datatype":"string"},
+    {"column":"ISP","path":"$.ISP","datatype":"string"},
+    {"column":"ReportId","path":"$.ReportId","datatype":"string"},
+    {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
+]
+```
+.create-merge table DeviceTvmSecureConfigurationAssessment (
+    DeviceId: string,                       DeviceName: string,
+    OSPlatform: string,                     Timestamp: datetime,
+    ConfigurationId: string,                ConfigurationCategory: string,
+    ConfigurationSubcategory: string,       ConfigurationImpact: real,
+    IsCompliant: long,                      IsApplicable: long,
+    Context: dynamic,                       IsExpectedUserImpact: long
+)
+.create-or-alter table DeviceTvmSecureConfigurationAssessment ingestion json mapping 'DeviceTvmSecureConfigurationAssessmentMapping' ```
+[
+    {"column":"DeviceId","path":"$.DeviceId","datatype":"string"},
+    {"column":"DeviceName","path":"$.DeviceName","datatype":"string"},
+    {"column":"OSPlatform","path":"$.OSPlatform","datatype":"string"},
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"ConfigurationId","path":"$.ConfigurationId","datatype":"string"},
+    {"column":"ConfigurationCategory","path":"$.ConfigurationCategory","datatype":"string"},
+    {"column":"ConfigurationSubcategory","path":"$.ConfigurationSubcategory","datatype":"string"},
+    {"column":"ConfigurationImpact","path":"$.ConfigurationImpact","datatype":"real"},
+    {"column":"IsCompliant","path":"$.IsCompliant","datatype":"long"},
+    {"column":"IsApplicable","path":"$.IsApplicable","datatype":"long"},
+    {"column":"Context","path":"$.Context","datatype":"dynamic"},
+    {"column":"IsExpectedUserImpact","path":"$.IsExpectedUserImpact","datatype":"long"}
+]
+```
 .create-merge table SecurityEvent (
     TimeGenerated: datetime,
     SourceComputerId: string,    Type: string,
@@ -871,6 +1210,45 @@
 .alter table DeviceFileCertificateInfo policy roworder (Timestamp asc)
 .alter table DeviceFileCertificateInfo policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
 .alter table DeviceFileCertificateInfo policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter table AlertInfo policy roworder (Timestamp asc)
+.alter table AlertInfo policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table AlertInfo policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter table AlertEvidence policy roworder (Timestamp asc)
+.alter table AlertEvidence policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table AlertEvidence policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column AlertEvidence.AccountSid policy encoding type = 'Identifier'
+.alter column AlertEvidence.AccountObjectId policy encoding type = 'Identifier'
+.alter column AlertEvidence.DeviceId policy encoding type = 'Identifier'
+.alter table BehaviorInfo policy roworder (Timestamp asc)
+.alter table BehaviorInfo policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table BehaviorInfo policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column BehaviorInfo.DeviceId policy encoding type = 'Identifier'
+.alter column BehaviorInfo.AccountObjectId policy encoding type = 'Identifier'
+.alter table BehaviorEntities policy roworder (Timestamp asc)
+.alter table BehaviorEntities policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table BehaviorEntities policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column BehaviorEntities.AccountSid policy encoding type = 'Identifier'
+.alter column BehaviorEntities.AccountObjectId policy encoding type = 'Identifier'
+.alter column BehaviorEntities.DeviceId policy encoding type = 'Identifier'
+.alter table IdentityLogonEvents policy roworder (Timestamp asc)
+.alter table IdentityLogonEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table IdentityLogonEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column IdentityLogonEvents.AccountSid policy encoding type = 'Identifier'
+.alter column IdentityLogonEvents.AccountObjectId policy encoding type = 'Identifier'
+.alter table IdentityQueryEvents policy roworder (Timestamp asc)
+.alter table IdentityQueryEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table IdentityQueryEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column IdentityQueryEvents.AccountSid policy encoding type = 'Identifier'
+.alter column IdentityQueryEvents.AccountObjectId policy encoding type = 'Identifier'
+.alter table IdentityDirectoryEvents policy roworder (Timestamp asc)
+.alter table IdentityDirectoryEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table IdentityDirectoryEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column IdentityDirectoryEvents.AccountSid policy encoding type = 'Identifier'
+.alter column IdentityDirectoryEvents.AccountObjectId policy encoding type = 'Identifier'
+.alter table DeviceTvmSecureConfigurationAssessment policy roworder (Timestamp asc)
+.alter table DeviceTvmSecureConfigurationAssessment policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table DeviceTvmSecureConfigurationAssessment policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column DeviceTvmSecureConfigurationAssessment.DeviceId policy encoding type = 'Identifier'
 .alter table SecurityEvent policy roworder (TimeGenerated asc, EventID asc)
 .alter table SecurityEvent policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
 .alter table SecurityEvent policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
@@ -899,6 +1277,14 @@
 .alter table DeviceInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .alter table DeviceNetworkInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .alter table DeviceFileCertificateInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table AlertInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table AlertEvidence policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table BehaviorInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table BehaviorEntities policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table IdentityLogonEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table IdentityQueryEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table IdentityDirectoryEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table DeviceTvmSecureConfigurationAssessment policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .alter table SecurityEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .alter table Suricata_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .alter table WindowsEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
