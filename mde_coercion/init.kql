@@ -6553,6 +6553,10 @@ parser (
         ['pack']:bool=false) {
     imAuditEvent(starttime, endtime, srcipaddr_has_any_prefix, actorusername_has_any, operation_has_any, eventtype_in, eventresult, object_has_any, newvalue_has_any, pack)
 }
+.ingest async into table AlertEvidence (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/AlertEvidence.parquet') with (format='parquet')
+.ingest async into table AlertInfo (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/AlertInfo.parquet') with (format='parquet')
+.ingest async into table BehaviorEntities (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/BehaviorEntities.parquet') with (format='parquet')
+.ingest async into table BehaviorInfo (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/BehaviorInfo.parquet') with (format='parquet')
 .ingest async into table Corelight_CL (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/Corelight_CL.parquet') with (format='parquet')
 .ingest async into table DeviceEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceEvents.parquet') with (format='parquet')
 .ingest async into table DeviceFileCertificateInfo (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceFileCertificateInfo.parquet') with (format='parquet')
@@ -6564,6 +6568,10 @@ parser (
 .ingest async into table DeviceNetworkInfo (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceNetworkInfo.parquet') with (format='parquet')
 .ingest async into table DeviceProcessEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceProcessEvents.parquet') with (format='parquet')
 .ingest async into table DeviceRegistryEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceRegistryEvents.parquet') with (format='parquet')
+.ingest async into table DeviceTvmSecureConfigurationAssessment (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/DeviceTvmSecureConfigurationAssessment.parquet') with (format='parquet')
+.ingest async into table IdentityDirectoryEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/IdentityDirectoryEvents.parquet') with (format='parquet')
+.ingest async into table IdentityLogonEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/IdentityLogonEvents.parquet') with (format='parquet')
+.ingest async into table IdentityQueryEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/IdentityQueryEvents.parquet') with (format='parquet')
 .ingest async into table SecurityEvent (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/SecurityEvent.parquet') with (format='parquet')
 .ingest async into table Suricata_CL (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/Suricata_CL.parquet') with (format='parquet')
 .ingest async into table WindowsEvent (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/mde_coercion/WindowsEvent.parquet') with (format='parquet')
