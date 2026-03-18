@@ -889,33 +889,19 @@
 .alter column WindowsEvent.EventOriginId policy encoding type = 'Identifier'
 .alter column WindowsEvent.TenantId policy encoding type = 'Identifier'
 .alter table Corelight_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table Corelight_CL policy caching hot = 30d
 .alter table DeviceEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceEvents policy caching hot = 30d
 .alter table DeviceProcessEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceProcessEvents policy caching hot = 30d
 .alter table DeviceNetworkEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceNetworkEvents policy caching hot = 30d
 .alter table DeviceFileEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceFileEvents policy caching hot = 30d
 .alter table DeviceLogonEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceLogonEvents policy caching hot = 30d
 .alter table DeviceImageLoadEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceImageLoadEvents policy caching hot = 30d
 .alter table DeviceRegistryEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceRegistryEvents policy caching hot = 30d
 .alter table DeviceInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceInfo policy caching hot = 30d
 .alter table DeviceNetworkInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceNetworkInfo policy caching hot = 30d
 .alter table DeviceFileCertificateInfo policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table DeviceFileCertificateInfo policy caching hot = 30d
 .alter table SecurityEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table SecurityEvent policy caching hot = 30d
 .alter table Suricata_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table Suricata_CL policy caching hot = 30d
 .alter table WindowsEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-.alter table WindowsEvent policy caching hot = 30d
 .create-or-alter function with (skipvalidation=true) _GetWatchlist(
     ['watchlistAlias']:string,
     ['keys']:dynamic=dynamic([])
