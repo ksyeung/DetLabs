@@ -1116,6 +1116,7 @@
     HandleId: string,            OperationType: string,
     OldValue: string,            NewValue: string,
     OldValueType: string,        NewValueType: string,
+    Task: string,
     TaskName: string,            TaskContent: string,
     Status: string,              SubStatus: string,
     Operation: string,           EventData: dynamic,
