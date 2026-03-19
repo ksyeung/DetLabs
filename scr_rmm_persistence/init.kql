@@ -1157,4 +1157,4 @@ let RegistryType = datatable (TypeCode: string, TypeName: string) [ "%%1872", "R
 .ingest async into table DeviceProcessEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/scr_rmm_persistence/DeviceProcessEvents_0_38b0fee15d394ca8b332b8fee15928d0.parquet') with (format='parquet')
 .ingest async into table DeviceRegistryEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/scr_rmm_persistence/DeviceRegistryEvents_0_7d91ff5205ed4feca75a7722332281d4.parquet') with (format='parquet')
 .ingest async into table SecurityEvent (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/scr_rmm_persistence/SecurityEvent_0_5231c5a3aec74dab8d73fe7fcb72af52.parquet') with (format='parquet')
-.ingest into table WindowsEvent (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/scr_rmm_persistence/WindowsEvent_0_e411bbdbfebd4eecb8d4a34a9ddc1723.parquet') with (format='parquet')
+.ingest async into table WindowsEvent (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/scr_rmm_persistence/WindowsEvent_0_e411bbdbfebd4eecb8d4a34a9ddc1723.parquet') with (format='parquet')
