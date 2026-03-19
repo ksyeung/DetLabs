@@ -1,0 +1,211 @@
+Provider,Channel,EventID,Count
+ESENT,Application,412,299
+LsaSrv,Microsoft-Windows-LSA/Operational,300,497
+LsaSrv,Microsoft-Windows-LSA/Operational,302,1
+MSSQL$MICROSOFT##WID,Application,17137,4
+Microsoft-Windows-AppModel-Runtime,Microsoft-Windows-AppModel-Runtime/Admin,210,3
+Microsoft-Windows-AppModel-Runtime,Microsoft-Windows-AppModel-Runtime/Admin,211,3
+Microsoft-Windows-AppModel-Runtime,Microsoft-Windows-AppModel-Runtime/Admin,217,4
+Microsoft-Windows-Bits-Client,Microsoft-Windows-Bits-Client/Operational,306,4
+Microsoft-Windows-BrokerInfrastructure,Microsoft-Windows-BackgroundTaskInfrastructure/Operational,21,3
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,10,22422
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,11,22398
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,30,25088
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,40,345
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,41,346
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,42,8
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,50,39
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,51,39
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,52,10
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,53,10
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,60,16
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,80,6279
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,81,6293
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,82,20782
+Microsoft-Windows-CAPI2,Microsoft-Windows-CAPI2/Operational,90,15333
+Microsoft-Windows-CodeIntegrity,Microsoft-Windows-CodeIntegrity/Operational,3004,11
+Microsoft-Windows-CodeIntegrity,Microsoft-Windows-CodeIntegrity/Operational,3033,10
+Microsoft-Windows-CodeIntegrity,Microsoft-Windows-CodeIntegrity/Operational,3089,32
+Microsoft-Windows-Crypto-DPAPI,Microsoft-Windows-Crypto-DPAPI/Debug,16385,108
+Microsoft-Windows-Crypto-NCrypt,Microsoft-Windows-Crypto-NCrypt/Operational,2,1
+Microsoft-Windows-DNS-Client,Microsoft-Windows-DNS-Client/Operational,3008,3220
+Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider,Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Operational,2545,7
+Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider,Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Operational,4000,7
+Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider,Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Operational,4009,28
+Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider,Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Operational,4019,7
+Microsoft-Windows-Directory-Services-SAM,System,16969,1
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,1006,2
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,1008,2
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,2100,4
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,2102,4
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,2900,2
+Microsoft-Windows-DriverFrameworks-UserMode,Microsoft-Windows-DriverFrameworks-UserMode/Operational,2901,2
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4004,1
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4005,1
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4006,10
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4016,10
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4017,45
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4115,3
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4116,3
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4117,6
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4126,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4216,2
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4257,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,4326,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5016,10
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5017,45
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5116,3
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5117,6
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5126,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5216,2
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5257,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5308,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5309,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5310,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5311,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5312,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5313,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5315,10
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5320,81
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5321,3
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5324,5
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5326,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5340,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,5351,6
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,6314,12
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,8004,1
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,8005,1
+Microsoft-Windows-GroupPolicy,Microsoft-Windows-GroupPolicy/Operational,8006,10
+Microsoft-Windows-GroupPolicy,System,1500,1
+Microsoft-Windows-GroupPolicy,System,1501,1
+Microsoft-Windows-Kernel-PnP,Microsoft-Windows-Kernel-PnP/Configuration,420,1
+Microsoft-Windows-LiveId,Microsoft-Windows-LiveId/Operational,2024,2
+Microsoft-Windows-LiveId,Microsoft-Windows-LiveId/Operational,6115,1
+Microsoft-Windows-LiveId,Microsoft-Windows-LiveId/Operational,6116,1
+Microsoft-Windows-LiveId,Microsoft-Windows-LiveId/Operational,6117,1
+Microsoft-Windows-NTLM,Microsoft-Windows-NTLM/Operational,4014,71
+Microsoft-Windows-NTLM,Microsoft-Windows-NTLM/Operational,8002,56
+Microsoft-Windows-NTLM,Microsoft-Windows-NTLM/Operational,8003,11
+Microsoft-Windows-Ntfs,Microsoft-Windows-Ntfs/Operational,142,2
+Microsoft-Windows-Ntfs,Microsoft-Windows-Ntfs/Operational,170,16
+Microsoft-Windows-PowerShell,Microsoft-Windows-PowerShell/Operational,4100,60
+Microsoft-Windows-PowerShell,Microsoft-Windows-PowerShell/Operational,4103,10438
+Microsoft-Windows-PowerShell,Microsoft-Windows-PowerShell/Operational,4104,347
+Microsoft-Windows-PowerShell,Microsoft-Windows-PowerShell/Operational,53504,26
+Microsoft-Windows-PrintService,Microsoft-Windows-PrintService/Operational,306,1
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,72,12
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,102,2
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,103,1
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,107,1
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,144,1
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,145,2
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,148,30
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,226,1
+Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,229,1
+Microsoft-Windows-SENSE,Microsoft-Windows-SENSE/Operational,4,2
+Microsoft-Windows-SENSE,Microsoft-Windows-SENSE/Operational,59,5
+Microsoft-Windows-SENSE,Microsoft-Windows-SENSE/Operational,71,5
+Microsoft-Windows-SENSE,Microsoft-Windows-SENSE/Operational,412,64
+Microsoft-Windows-SENSE,Microsoft-Windows-SENSE/Operational,419,2
+Microsoft-Windows-SMBClient,Microsoft-Windows-SmbClient/Connectivity,30800,4
+Microsoft-Windows-SMBServer,Microsoft-Windows-SMBServer/Audit,3000,2
+Microsoft-Windows-SMBServer,Microsoft-Windows-SMBServer/Operational,1001,1
+Microsoft-Windows-SMBServer,Microsoft-Windows-SMBServer/Security,551,20
+Microsoft-Windows-SMBServer,Microsoft-Windows-SMBServer/Security,1009,40
+Microsoft-Windows-SMBServer,Microsoft-Windows-SMBServer/Security,1015,4
+Microsoft-Windows-Security-Audit-Configuration-Client,Microsoft-Windows-Security-Audit-Configuration-Client/Operational,102,10
+Microsoft-Windows-Security-Kerberos,Microsoft-Windows-Kerberos/Operational,201,8
+Microsoft-Windows-Security-Mitigations,Microsoft-Windows-Security-Mitigations/KernelMode,12,136
+Microsoft-Windows-Shell-Core,Microsoft-Windows-Shell-Core/Operational,28017,1
+Microsoft-Windows-Shell-Core,Microsoft-Windows-Shell-Core/Operational,28018,1
+Microsoft-Windows-Shell-Core,Microsoft-Windows-Shell-Core/Operational,28019,1
+Microsoft-Windows-Shell-Core,Microsoft-Windows-Shell-Core/Operational,28032,1
+Microsoft-Windows-Shell-Core,Microsoft-Windows-Shell-Core/Operational,28117,1
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,1,949
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,2,267
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,3,2929
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,5,1019
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,6,2
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,7,33873
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,8,187
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,9,308
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,10,616628
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,11,4922
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,12,241247
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,13,23813
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,15,22
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,17,573
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,18,1401
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,22,582
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,24,6
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,25,27
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,26,6847
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,28,303
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,29,69
+Microsoft-Windows-Sysmon,Microsoft-Windows-Sysmon/Operational,255,6
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,100,24
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,101,2
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,102,23
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,103,3
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,106,2
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,107,16
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,108,4
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,109,1
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,110,1
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,118,1
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,129,22
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,140,5
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,141,2
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,200,24
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,201,23
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,202,3
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,203,2
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,322,89
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,325,1
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,400,1
+Microsoft-Windows-TaskScheduler,Microsoft-Windows-TaskScheduler/Operational,700,1
+Microsoft-Windows-TerminalServices-LocalSessionManager,Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,23,1
+Microsoft-Windows-TerminalServices-LocalSessionManager,Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,24,2
+Microsoft-Windows-TerminalServices-LocalSessionManager,Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,39,1
+Microsoft-Windows-TerminalServices-LocalSessionManager,Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,40,2
+Microsoft-Windows-TerminalServices-LocalSessionManager,Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,59,1
+Microsoft-Windows-User Device Registration,Microsoft-Windows-User Device Registration/Admin,304,2
+Microsoft-Windows-User Device Registration,Microsoft-Windows-User Device Registration/Admin,307,2
+Microsoft-Windows-User Device Registration,Microsoft-Windows-User Device Registration/Admin,331,2
+Microsoft-Windows-User Profiles Service,Microsoft-Windows-User Profile Service/Operational,3,1
+Microsoft-Windows-User Profiles Service,Microsoft-Windows-User Profile Service/Operational,4,1
+Microsoft-Windows-User Profiles Service,Microsoft-Windows-User Profile Service/Operational,5,4
+Microsoft-Windows-User Profiles Service,Microsoft-Windows-User Profile Service/Operational,67,2
+Microsoft-Windows-WMI-Activity,Microsoft-Windows-WMI-Activity/Operational,5857,54
+Microsoft-Windows-WMI-Activity,Microsoft-Windows-WMI-Activity/Operational,5858,16
+Microsoft-Windows-WMI-Activity,Microsoft-Windows-WMI-Activity/Operational,5860,4
+Microsoft-Windows-WinRM,Microsoft-Windows-WinRM/Operational,91,18
+Microsoft-Windows-WinRM,Microsoft-Windows-WinRM/Operational,132,8
+Microsoft-Windows-WinRM,Microsoft-Windows-WinRM/Operational,145,8
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,1000,1
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,1001,1
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,1116,27
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,1117,19
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,1151,2
+Microsoft-Windows-Windows Defender,Microsoft-Windows-Windows Defender/Operational,2010,4
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2006,1
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2052,2
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2071,2
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2073,4
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2097,1
+Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2099,1
+Microsoft-Windows-Winlogon,Application,6000,1
+Microsoft-Windows-Winlogon,Microsoft-Windows-Winlogon/Operational,811,16
+Microsoft-Windows-Winlogon,Microsoft-Windows-Winlogon/Operational,812,16
+Microsoft-Windows-Winlogon,System,7002,1
+PowerShell,Windows PowerShell,400,26
+PowerShell,Windows PowerShell,403,25
+PowerShell,Windows PowerShell,600,159
+PowerShell,Windows PowerShell,800,10466
+SecurityCenter,Application,15,32
+Service Control Manager,System,7031,1
+Service Control Manager,System,7036,107
+Service Control Manager,System,7040,13
+Service Control Manager,System,7045,4
+VSS,Application,8230,1
+edgeupdate,Application,0,2
