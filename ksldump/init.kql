@@ -1,7 +1,5 @@
 .drop functions (_GetWatchlist, _ASIM_GetUsernameType, _ASIM_GetWindowsUserType, _ASIM_ResolveDstFQDN, _ASIM_ResolveDvcFQDN, _ASIM_ResolveFQDN, _ASIM_ResolveSrcFQDN, ASimAuditEvent, ASimAuditEventMicrosoftSecurityEvents, ASimAuditEventMicrosoftWindowsEvents, imAuditEvent, vimAuditEventEmpty, vimAuditEventMicrosoftSecurityEvents, vimAuditEventMicrosoftWindowsEvents, ASimAuthentication, ASimAuthenticationMicrosoftWindowsEvent, imAuthentication, vimAuthenticationEmpty, vimAuthenticationMicrosoftWindowsEvent, ASimDns, ASimDnsCorelightZeek, ASimDnsMicrosoft365Defender, ASimDnsMicrosoftSysmonWindowsEvent, imDns, vimDnsCorelightZeek, vimDnsEmpty, vimDnsMicrosoft365Defender, vimDnsMicrosoftSysmonWindowsEvent, ASimFileEvent, ASimFileEventMicrosoftSecurityEvents, ASimFileEventMicrosoftSysmonWindowsEvent, ASimFileEventMicrosoftWindowsEvents, imFileEvent, vimFileEventEmpty, vimFileEventMicrosoftSecurityEvents, vimFileEventMicrosoftSysmonWindowsEvent, vimFileEventMicrosoftWindowsEvents, ASimNetworkSession, ASimNetworkSessionCorelightZeek, ASimNetworkSessionMicrosoft365Defender, ASimNetworkSessionMicrosoftSecurityEventFirewall, ASimNetworkSessionMicrosoftSysmonWindowsEvent, ASimNetworkSessionMicrosoftWindowsEventFirewall, imNetworkSession, vimNetworkSessionCorelightZeek, vimNetworkSessionEmpty, vimNetworkSessionMicrosoft365Defender, vimNetworkSessionMicrosoftSecurityEventFirewall, vimNetworkSessionMicrosoftSysmonWindowsEvent, vimNetworkSessionMicrosoftWindowsEventFirewall, ASimProcessCreateMicrosoftSecurityEvents, ASimProcessCreateMicrosoftWindowsEvents, ASimProcessEvent, ASimProcessEventCreate, ASimProcessEventCreateMicrosoftSysmonWindowsEvent, ASimProcessEventMicrosoft365D, ASimProcessEventTerminate, ASimProcessEventTerminateMicrosoftSysmonWindowsEvent, ASimProcessTerminateMicrosoftSecurityEvents, ASimProcessTerminateMicrosoftWindowsEvents, imProcessCreate, imProcessEvent, imProcessTerminate, vimProcessCreateMicrosoftSecurityEvents, vimProcessCreateMicrosoftWindowsEvents, vimProcessEmpty, vimProcessEventCreateMicrosoftSysmonWindowsEvent, vimProcessEventMicrosoft365D, vimProcessEventTerminateMicrosoftSysmonWindowsEvent, vimProcessTerminateMicrosoftSecurityEvents, vimProcessTerminateMicrosoftWindowsEvents, ASimRegistry, ASimRegistryEventMicrosoftSecurityEvent, ASimRegistryEventMicrosoftSysmonWindowsEvent, ASimRegistryEventMicrosoftWindowsEvent, imRegistry, vimRegistryEventEmpty, vimRegistryEventMicrosoftSecurityEvent, vimRegistryEventMicrosoftSysmonWindowsEvent, vimRegistryEventMicrosoftWindowsEvent, _ASim_Authentication, _ASim_Dns, _ASim_NetworkSession, _ASim_ProcessEvent, _ASim_ProcessCreate, _ASim_ProcessTerminate, _ASim_FileEvent, _ASim_RegistryEvent, _ASim_AuditEvent, _Im_Authentication, _Im_Dns, _Im_NetworkSession, _Im_ProcessEvent, _Im_ProcessCreate, _Im_ProcessTerminate, _Im_FileEvent, _Im_RegistryEvent, _Im_AuditEvent) ifexists
-
 .drop tables (Corelight_CL, DeviceEvents, DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceLogonEvents, DeviceImageLoadEvents, DeviceRegistryEvents, DeviceInfo, DeviceNetworkInfo, DeviceFileCertificateInfo, AlertInfo, AlertEvidence, BehaviorInfo, BehaviorEntities, IdentityLogonEvents, IdentityQueryEvents, IdentityDirectoryEvents, DeviceTvmSecureConfigurationAssessment, SecurityEvent, Suricata_CL, WindowsEvent) ifexists
-
 .create-merge table Corelight_CL (
     TimeGenerated: datetime,  log_type: string,
     uid: string,              id_orig_h: string,
@@ -10,7 +8,6 @@
     community_id: string,     Message: string,
     ParsedMessage: dynamic
 )
-
 .create-merge table DeviceEvents (
     Timestamp: datetime,                   DeviceId: string,
     DeviceName: string,                    ActionType: string,
@@ -50,7 +47,6 @@
     InitiatingProcessIntegrityLevel: string, ReportId: long,
     AppGuardContainerId: string,           AdditionalFields: dynamic
 )
-
 .create-or-alter table DeviceEvents ingestion json mapping 'DeviceEventsMapping' ```
 [
     {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
@@ -116,7 +112,6 @@
     {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
 ]
 ```
-
 .create-merge table DeviceProcessEvents (
     Timestamp: datetime,                       DeviceId: string,
     DeviceName: string,                        ActionType: string,
@@ -159,7 +154,6 @@
     InitiatingProcessSignatureStatus: string,  ReportId: long,
     AppGuardContainerId: string,               AdditionalFields: dynamic
 )
-
 .create-or-alter table DeviceProcessEvents ingestion json mapping 'DeviceProcessEventsMapping' ```
 [
     {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
@@ -222,7 +216,6 @@
     {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
 ]
 ```
-
 .create-merge table DeviceNetworkEvents (
     Timestamp: datetime,                      DeviceId: string,
     DeviceName: string,                       ActionType: string,
@@ -255,7 +248,6 @@
     InitiatingProcessSignatureStatus: string, ReportId: long,
     AppGuardContainerId: string,              AdditionalFields: dynamic
 )
-
 .create-or-alter table DeviceNetworkEvents ingestion json mapping 'DeviceNetworkEventsMapping' ```
 [
     {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
@@ -303,7 +295,6 @@
     {"column":"AdditionalFields","path":"$.AdditionalFields","datatype":"dynamic"}
 ]
 ```
-
 .create-merge table SecurityEvent (
     TimeGenerated: datetime,
     SourceComputerId: string,    Type: string,
@@ -337,7 +328,6 @@
     EventID: int,                _ResourceId: string,
     _SubscriptionId: string,     _ItemId: string
 )
-
 .create-merge table Suricata_CL (
     TimeGenerated: datetime,  EventType: string,
     CommunityId: string,      FlowId: long,
@@ -346,7 +336,6 @@
     DestIp: string,           DestPort: int,
     AppProto: string,         EventData: dynamic
 )
-
 .create-merge table WindowsEvent (
     TimeGenerated: datetime,  Computer: string,
     Channel: string,          Provider: string,
@@ -365,7 +354,55 @@
     MG: string,               Data: string,
     TimeCollected: string,    TimeCreated: datetime
 )
-
+.alter table Corelight_CL policy roworder (TimeGenerated asc)
+.alter table Corelight_CL policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table Corelight_CL policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter table DeviceEvents policy roworder (Timestamp asc)
+.alter table DeviceEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table DeviceEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column DeviceEvents.DeviceId policy encoding type = 'Identifier'
+.alter column DeviceEvents.AccountSid policy encoding type = 'Identifier'
+.alter column DeviceEvents.AccountObjectId policy encoding type = 'Identifier'
+.alter column DeviceEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
+.alter column DeviceEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
+.alter table DeviceProcessEvents policy roworder (Timestamp asc)
+.alter table DeviceProcessEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table DeviceProcessEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column DeviceProcessEvents.DeviceId policy encoding type = 'Identifier'
+.alter column DeviceProcessEvents.AccountSid policy encoding type = 'Identifier'
+.alter column DeviceProcessEvents.AccountObjectId policy encoding type = 'Identifier'
+.alter column DeviceProcessEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
+.alter column DeviceProcessEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
+.alter table DeviceNetworkEvents policy roworder (Timestamp asc)
+.alter table DeviceNetworkEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table DeviceNetworkEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column DeviceNetworkEvents.DeviceId policy encoding type = 'Identifier'
+.alter column DeviceNetworkEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
+.alter column DeviceNetworkEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
+.alter table SecurityEvent policy roworder (TimeGenerated asc, EventID asc)
+.alter table SecurityEvent policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table SecurityEvent policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column SecurityEvent.SubjectUserSid policy encoding type = 'Identifier'
+.alter column SecurityEvent.TargetUserSid policy encoding type = 'Identifier'
+.alter column SecurityEvent.LogonGuid policy encoding type = 'Identifier'
+.alter column SecurityEvent.SourceComputerId policy encoding type = 'Identifier'
+.alter column SecurityEvent.EventOriginId policy encoding type = 'Identifier'
+.alter table Suricata_CL policy roworder (TimeGenerated asc)
+.alter table Suricata_CL policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table Suricata_CL policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter table WindowsEvent policy roworder (TimeGenerated asc, Provider asc, EventID asc)
+.alter table WindowsEvent policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
+.alter table WindowsEvent policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
+.alter column WindowsEvent.SystemUserId policy encoding type = 'Identifier'
+.alter column WindowsEvent.EventOriginId policy encoding type = 'Identifier'
+.alter column WindowsEvent.TenantId policy encoding type = 'Identifier'
+.alter table Corelight_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table DeviceEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table DeviceProcessEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table DeviceNetworkEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table SecurityEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table Suricata_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
+.alter table WindowsEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .create-or-alter function with (skipvalidation=true) _GetWatchlist(
     ['watchlistAlias']:string,
     ['keys']:dynamic=dynamic([])
@@ -373,7 +410,6 @@
 {
     datatable(SearchKey:string, WatchlistItem:dynamic)[]
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets the UsernameType based on the username", folder="ASIM")
     _ASIM_GetUsernameType(username:string)
 {
@@ -388,7 +424,6 @@ let ASIM_GetUsernameType = (username:string) {
 };
 ASIM_GetUsernameType (username)
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets the UserType for Windows systems based on the username and sid", folder="ASIM")
     _ASIM_GetWindowsUserType(username:string, sid:string)
 {
@@ -415,7 +450,6 @@ let ASIM_GetWindowsUserType = (username:string, sid:string) {
 };
 ASIM_GetWindowsUserType(username,sid)
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets DstHostname, DstDomain, DstDomainType and DstFQDN based for an FQDN or hostname provided as a parameter", folder="ASIM")
     _ASIM_ResolveDstFQDN(T:(*), field:string)
 {
@@ -427,7 +461,6 @@ T
     DstFQDN = FQDN,
     DstDomainType = DomainType
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets DvcHostname, DvcDomain, DvcDomainType and DvcFQDN based for an FQDN or hostname provided as a parameter", folder="ASIM")
     _ASIM_ResolveDvcFQDN(T:(*), field:string)
 {
@@ -439,7 +472,6 @@ T
     DvcFQDN = FQDN,
     DvcDomainType = DomainType
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets Hostname, Domain, DomainType and FQDN based for an FQDN or hostname provided as a parameter", folder="ASIM")
     _ASIM_ResolveFQDN(T:(*), field:string)
 {
@@ -464,7 +496,6 @@ T
         ExtractedHostname)   
 | project-away DotSplitHostname, SlashSplitHostname
 }
-
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets SrcHostname, SrcDomain, SrcDomainType and SrcFQDN based for an FQDN or hostname provided as a parameter", folder="ASIM")
     _ASIM_ResolveSrcFQDN(T:(*), field:string)
 {
@@ -476,7 +507,6 @@ T
     SrcFQDN = FQDN,
     SrcDomainType = DomainType
 }
-
 .create-or-alter function with (skipvalidation=true) ASimAuditEvent(    ['pack']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimAuditEvent') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -486,17 +516,14 @@ union
   ASimAuditEventMicrosoftWindowsEvents (disabled=BuiltInDisabled or ('ExcludeASimAuditEventMicrosoftWindowsEvents' in (DisabledParsers))),
   ASimAuditEventMicrosoftSecurityEvents (disabled=BuiltInDisabled or ('ExcludeASimAuditEventMicrosoftSecurityEvents' in (DisabledParsers)))
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimAuditEventMicrosoftSecurityEvents(['disabled']:bool=false) {
     vimAuditEventMicrosoftSecurityEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimAuditEventMicrosoftWindowsEvents(['disabled']:bool=false) {
     vimAuditEventMicrosoftWindowsEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imAuditEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -518,7 +545,6 @@ union
     vimAuditEventMicrosoftWindowsEvents (starttime=starttime, endtime=endtime, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, eventtype_in=eventtype_in, eventresult=eventresult, actorusername_has_any=actorusername_has_any, operation_has_any=operation_has_any, object_has_any=object_has_any, newvalue_has_any=newvalue_has_any, disabled=(BuiltInDisabled or ('ExcludevimAuditEventMicrosoftWindowsEvents' in (DisabledParsers)))),
     vimAuditEventMicrosoftSecurityEvents (starttime=starttime, endtime=endtime, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, eventtype_in=eventtype_in, eventresult=eventresult, actorusername_has_any=actorusername_has_any, operation_has_any=operation_has_any, object_has_any=object_has_any, newvalue_has_any=newvalue_has_any, disabled=(BuiltInDisabled or ('ExcludevimAuditEventMicrosoftSecurityEvents' in (DisabledParsers))))
 }
-
 .create-or-alter function with (skipvalidation=true) vimAuditEventEmpty
 {
 let EmptyAuditEvents =datatable (
@@ -587,7 +613,6 @@ let EmptyAuditEvents =datatable (
 )[];
 EmptyAuditEvents
 }
-
 .create-or-alter function with (skipvalidation=true) vimAuditEventMicrosoftSecurityEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -798,7 +823,6 @@ let EventIDLookup = datatable(
       disabled=disabled
   )
 }
-
 .create-or-alter function with (skipvalidation=true) vimAuditEventMicrosoftWindowsEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -1005,7 +1029,6 @@ let EventIDLookup = datatable(
       disabled=disabled
   )
 }
-
 .create-or-alter function with (skipvalidation=true) ASimAuthentication(    ['disabled']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimAuthentication') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -1014,7 +1037,6 @@ union
   vimAuthenticationEmpty,    
   ASimAuthenticationMicrosoftWindowsEvent (disabled=ASimAuthenticationDisabled or ('ExcludeASimAuthenticationMicrosoftWindowsEvent'      in (DisabledParsers) ))
 }
-
 .create-or-alter function with (skipvalidation=true) ASimAuthenticationMicrosoftWindowsEvent(    ['disabled']:bool=false)
 {
 let LogonEvents=dynamic([4624, 4625]);
@@ -1230,7 +1252,6 @@ union
     SecEventLogon(disabled=disabled),
     WinLogon(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imAuthentication(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['username_has_any']:dynamic=dynamic([]),
@@ -1251,7 +1272,6 @@ let Generic=(starttime: datetime=datetime(null), endtime: datetime=datetime(null
 };
 Generic(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true) vimAuthenticationEmpty
 {
 let EmptyAuthenticationTable=datatable(
@@ -1324,7 +1344,6 @@ let EmptyAuthenticationTable=datatable(
   )[];
 EmptyAuthenticationTable
 }
-
 .create-or-alter function with (skipvalidation=true) vimAuthenticationMicrosoftWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['username_has_any']:dynamic=dynamic([]),
@@ -1672,7 +1691,6 @@ let SecEventLogon =(starttime: datetime=datetime(null),
 union SecEventLogon(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, disabled=disabled),
                 WinLogon(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) ASimDns(    ['pack']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimDns') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -1683,22 +1701,18 @@ union
   ASimDnsMicrosoftSysmonWindowsEvent (disabled=imDnsBuiltInDisabled or ('ExcludeASimDnsMicrosoftSysmonWindowsEvent' in (DisabledParsers) )),
   ASimDnsMicrosoft365Defender (disabled=imDnsBuiltInDisabled or ('ExcludeASimDnsMicrosoft365Defender'         in (DisabledParsers) ))
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimDnsCorelightZeek(['disabled']:bool=false) {
     vimDnsCorelightZeek(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimDnsMicrosoft365Defender(['disabled']:bool=false) {
     vimDnsMicrosoft365Defender(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimDnsMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimDnsMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imDns(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr']:string='*',
@@ -1720,7 +1734,6 @@ union
   };
 Generic( starttime=starttime, endtime=endtime, srcipaddr=srcipaddr, domain_has_any=domain_has_any, responsecodename=responsecodename, response_has_ipv4=response_has_ipv4, response_has_any_prefix=response_has_any_prefix, eventtype=eventtype, pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true) vimDnsCorelightZeek(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr']:string='*',
@@ -1857,7 +1870,6 @@ let query_type_lookup=datatable(DnsQueryType:int,DnsQueryTypeName:string)[
 };
 parser (starttime=starttime, endtime=endtime, srcipaddr=srcipaddr, domain_has_any=domain_has_any, responsecodename=responsecodename, response_has_ipv4=response_has_ipv4, response_has_any_prefix=response_has_any_prefix, disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimDnsEmpty
 {
 let EmptyNewDnsEvents=datatable(
@@ -1940,7 +1952,6 @@ let EmptyNewDnsEvents=datatable(
 )[];
 EmptyNewDnsEvents
 }
-
 .create-or-alter function with (skipvalidation=true) vimDnsMicrosoft365Defender(
     ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
@@ -2032,7 +2043,6 @@ parser(starttime=starttime, endtime=endtime, srcipaddr=srcipaddr, domain_has_any
        responsecodename=responsecodename, response_has_ipv4=response_has_ipv4,
        response_has_any_prefix=response_has_any_prefix, eventtype=eventtype, disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimDnsMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr']:string='*',
@@ -2132,7 +2142,6 @@ let ParsedDnsEvent=(
 };
 ParsedDnsEvent (starttime=starttime, endtime=endtime, srcipaddr=srcipaddr, domain_has_any=domain_has_any, responsecodename=responsecodename, response_has_ipv4=response_has_ipv4, response_has_any_prefix=response_has_any_prefix, eventtype=eventtype, disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) ASimFileEvent(    ['pack']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimFile') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser| where isnotempty(SourceSpecificParser));
@@ -2146,22 +2155,18 @@ union
   };
   parser (pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimFileEventMicrosoftSecurityEvents(['disabled']:bool=false) {
     vimFileEventMicrosoftSecurityEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimFileEventMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimFileEventMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimFileEventMicrosoftWindowsEvents(['disabled']:bool=false) {
     vimFileEventMicrosoftWindowsEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imFileEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -2200,7 +2205,6 @@ let parser=(
 };
 parser(starttime=starttime, endtime=endtime, eventtype_in=eventtype_in, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, actorusername_has_any=actorusername_has_any, targetfilepath_has_any=targetfilepath_has_any, srcfilepath_has_any=srcfilepath_has_any, hashes_has_any=hashes_has_any, dvchostname_has_any=dvchostname_has_any, pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true) vimFileEventEmpty
 {
 let FileEvent=datatable(
@@ -2277,7 +2281,6 @@ let FileEvent=datatable(
 )[];
 FileEvent
 }
-
 .create-or-alter function with (skipvalidation=true) vimFileEventMicrosoftSecurityEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -2438,7 +2441,6 @@ Parser (
     disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) vimFileEventMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -2551,7 +2553,6 @@ parser (
     disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) vimFileEventMicrosoftWindowsEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -2717,7 +2718,6 @@ Parser (
     disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) ASimNetworkSession(    ['pack']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimNetworkSession') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -2733,32 +2733,26 @@ union
 };
 NetworkSessionsGeneric (pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimNetworkSessionCorelightZeek(['disabled']:bool=false) {
     vimNetworkSessionCorelightZeek(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimNetworkSessionMicrosoft365Defender(['disabled']:bool=false) {
     vimNetworkSessionMicrosoft365Defender(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimNetworkSessionMicrosoftSecurityEventFirewall(['disabled']:bool=false) {
     vimNetworkSessionMicrosoftSecurityEventFirewall(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimNetworkSessionMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimNetworkSessionMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimNetworkSessionMicrosoftWindowsEventFirewall(['disabled']:bool=false) {
     vimNetworkSessionMicrosoftWindowsEventFirewall(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imNetworkSession(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -2794,7 +2788,6 @@ union
 };
 NetworkSessionsGeneric(starttime=starttime, endtime=endtime, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, dstipaddr_has_any_prefix=dstipaddr_has_any_prefix, ipaddr_has_any_prefix=ipaddr_has_any_prefix, dstportnumber=dstportnumber, hostname_has_any=hostname_has_any, dvcaction=dvcaction, eventresult=eventresult, pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionCorelightZeek(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -2909,7 +2902,6 @@ let parser = (
 };
 parser (starttime=starttime, endtime=endtime, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, dstipaddr_has_any_prefix=dstipaddr_has_any_prefix, ipaddr_has_any_prefix=ipaddr_has_any_prefix, dstportnumber=dstportnumber, hostname_has_any=hostname_has_any, dvcaction=dvcaction, eventresult=eventresult, disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionEmpty
 {
 let parser=datatable(
@@ -2999,7 +2991,6 @@ let parser=datatable(
  )[];
 parser
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionMicrosoft365Defender(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -3189,7 +3180,6 @@ union InboundNetworkEvents, OutboundNetworkEvents
 };
 M365Defender (starttime, endtime, srcipaddr_has_any_prefix, dstipaddr_has_any_prefix, ipaddr_has_any_prefix, dstportnumber, hostname_has_any, dvcaction, eventresult, disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionMicrosoftSecurityEventFirewall(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -3384,7 +3374,6 @@ let LayerCodeTable = datatable (LayerCode:string,LayerName:string)[
     eventresult=eventresult, 
     disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -3538,7 +3527,6 @@ Sysmon3_WindowsEvent
 };
   parser (starttime, endtime, srcipaddr_has_any_prefix, dstipaddr_has_any_prefix, ipaddr_has_any_prefix,dstportnumber, hostname_has_any, dvcaction, eventresult, disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) vimNetworkSessionMicrosoftWindowsEventFirewall(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['srcipaddr_has_any_prefix']:dynamic=dynamic([]),
@@ -3666,17 +3654,14 @@ let LayerCodeTable = datatable (LayerCode:string,LayerName:string)[
     eventresult=eventresult, 
     disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessCreateMicrosoftSecurityEvents(['disabled']:bool=false) {
     vimProcessCreateMicrosoftSecurityEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessCreateMicrosoftWindowsEvents(['disabled']:bool=false) {
     vimProcessCreateMicrosoftWindowsEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) ASimProcessEvent
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimProcess') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -3691,7 +3676,6 @@ union
   ASimProcessTerminateMicrosoftWindowsEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessTerminateMicrosoftWindowsEvents' in (DisabledParsers) )),
   ASimProcessCreateMicrosoftWindowsEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessCreateMicrosoftWindowsEvents' in (DisabledParsers) ))
 }
-
 .create-or-alter function with (skipvalidation=true) ASimProcessEventCreate
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimProcessEventCreate') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -3702,17 +3686,14 @@ union
   ASimProcessCreateMicrosoftSecurityEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessCreateMicrosoftSecurityEvents' in (DisabledParsers) )),
   ASimProcessCreateMicrosoftWindowsEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessCreateMicrosoftWindowsEvents' in (DisabledParsers) ))
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessEventCreateMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimProcessEventCreateMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessEventMicrosoft365D(['disabled']:bool=false) {
     vimProcessEventMicrosoft365D(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) ASimProcessEventTerminate
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimProcess') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser);
@@ -3723,22 +3704,18 @@ ASimProcessEventMicrosoft365D (disabled=imProcessEventBuiltInDisabled or ('Exclu
 ASimProcessTerminateMicrosoftSecurityEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessTerminateMicrosoftSecurityEvents' in (DisabledParsers) )),
 ASimProcessTerminateMicrosoftWindowsEvents (disabled=imProcessEventBuiltInDisabled or ('ExcludeASimProcessTerminateMicrosoftWindowsEvents' in (DisabledParsers) ))
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessEventTerminateMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimProcessEventTerminateMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessTerminateMicrosoftSecurityEvents(['disabled']:bool=false) {
     vimProcessTerminateMicrosoftSecurityEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimProcessTerminateMicrosoftWindowsEvents(['disabled']:bool=false) {
     vimProcessTerminateMicrosoftWindowsEvents(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imProcessCreate(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -3765,7 +3742,6 @@ union
 };
 Generic(starttime=starttime, endtime=endtime, commandline_has_any=commandline_has_any, commandline_has_all=commandline_has_all, commandline_has_any_ip_prefix=commandline_has_any_ip_prefix, actingprocess_has_any=actingprocess_has_any, targetprocess_has_any=targetprocess_has_any, parentprocess_has_any=parentprocess_has_any, targetusername=targetusername, dvcipaddr_has_any_prefix=dvcipaddr_has_any_prefix, dvcname_has_any=dvcipaddr_has_any_prefix, hashes_has_any=hashes_has_any, eventtype=eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true) imProcessEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -3796,7 +3772,6 @@ union
     };
 Generic(starttime=starttime, endtime=endtime, commandline_has_any=commandline_has_any, commandline_has_all=commandline_has_all, commandline_has_any_ip_prefix=commandline_has_any_ip_prefix, actingprocess_has_any=actingprocess_has_any, targetprocess_has_any=targetprocess_has_any, parentprocess_has_any=parentprocess_has_any,actorusername=actorusername, targetusername=targetusername, dvcipaddr_has_any_prefix=dvcipaddr_has_any_prefix, dvcname_has_any=dvcname_has_any, hashes_has_any=hashes_has_any, eventtype=eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true) imProcessTerminate(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -3821,7 +3796,6 @@ union
 };
 Generic(starttime, endtime, commandline_has_any, commandline_has_all, commandline_has_any_ip_prefix, actingprocess_has_any, targetprocess_has_any, parentprocess_has_any, actorusername, dvcipaddr_has_any_prefix, dvcname_has_any, eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessCreateMicrosoftSecurityEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -3949,7 +3923,6 @@ let MandatoryLabelLookup = datatable (MandatoryLabel:string,MandatoryLabelRid:st
    disabled=disabled
  )
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessCreateMicrosoftWindowsEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4063,7 +4036,6 @@ WindowsEvent
 parser (
   starttime=starttime, endtime=endtime, commandline_has_any=commandline_has_any, commandline_has_all=commandline_has_all, commandline_has_any_ip_prefix=commandline_has_any_ip_prefix, actingprocess_has_any=actingprocess_has_any, targetprocess_has_any=targetprocess_has_any, parentprocess_has_any=parentprocess_has_any, targetusername_has=targetusername_has, dvcipaddr_has_any_prefix=dvcipaddr_has_any_prefix, dvchostname_has_any=dvchostname_has_any, eventtype=eventtype, hashes_has_any=hashes_has_any, disabled=disabled
 )}
-
 .create-or-alter function with (skipvalidation=true) vimProcessEmpty
 {
 let EmptyNewProcessEvents = datatable(
@@ -4145,7 +4117,6 @@ let EmptyNewProcessEvents = datatable(
   )[];
   EmptyNewProcessEvents
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessEventCreateMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4271,7 +4242,6 @@ parser (
     disabled=disabled
   )
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessEventMicrosoft365D(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4452,7 +4422,6 @@ let parser = (
    disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessEventTerminateMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4545,7 +4514,6 @@ parser (
     disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessTerminateMicrosoftSecurityEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4605,7 +4573,6 @@ and (array_length(dvcname_has_any)==0 or Computer has_any (dvcname_has_any))
     Process = TargetProcessName
 }; ProcessEvents
 }
-
 .create-or-alter function with (skipvalidation=true) vimProcessTerminateMicrosoftWindowsEvents(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['commandline_has_any']:dynamic=dynamic([]),
@@ -4703,7 +4670,6 @@ parser (
   disabled=disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) ASimRegistry(    ['pack']:bool=false)
 {
 let DisabledParsers=materialize(_GetWatchlist('ASimDisabledParsers') | where SearchKey in ('Any', 'ExcludeASimRegistry') | extend SourceSpecificParser=column_ifexists('SourceSpecificParser','') | distinct SourceSpecificParser| where isnotempty(SourceSpecificParser));
@@ -4717,22 +4683,18 @@ union
   };
   parser (pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimRegistryEventMicrosoftSecurityEvent(['disabled']:bool=false) {
     vimRegistryEventMicrosoftSecurityEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimRegistryEventMicrosoftSysmonWindowsEvent(['disabled']:bool=false) {
     vimRegistryEventMicrosoftSysmonWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true)
     ASimRegistryEventMicrosoftWindowsEvent(['disabled']:bool=false) {
     vimRegistryEventMicrosoftWindowsEvent(disabled=disabled)
 }
-
 .create-or-alter function with (skipvalidation=true) imRegistry(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -4766,7 +4728,6 @@ union
   };
   parser(starttime = starttime, endtime = endtime, eventtype_in = eventtype_in, actorusername_has_any = actorusername_has_any, registrykey_has_any = registrykey_has_any, registryvalue_has_any = registryvalue_has_any, registrydata_has_any = registrydata_has_any, dvchostname_has_any= dvchostname_has_any, pack=pack)
 }
-
 .create-or-alter function with (skipvalidation=true) vimRegistryEventEmpty
 {
 let EmptyNewRegistryEvents = datatable(
@@ -4816,7 +4777,6 @@ let EmptyNewRegistryEvents = datatable(
     )[];
     EmptyNewRegistryEvents
 }
-
 .create-or-alter function with (skipvalidation=true) vimRegistryEventMicrosoftSecurityEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -5037,7 +4997,6 @@ parser (
     disabled                 = disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true) vimRegistryEventMicrosoftSysmonWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -5140,7 +5099,6 @@ let parser = (
   parser (
       starttime                = starttime, endtime                  = endtime, eventtype_in             = eventtype_in, actorusername_has_any    = actorusername_has_any, registrykey_has_any = registrykey_has_any, registryvalue_has_any = registryvalue_has_any, registrydata_has_any = registrydata_has_any, dvchostname_has_any= dvchostname_has_any, disabled                 = disabled
   )}
-
 .create-or-alter function with (skipvalidation=true) vimRegistryEventMicrosoftWindowsEvent(    ['starttime']:datetime=datetime(null),
     ['endtime']:datetime=datetime(null),
     ['eventtype_in']:dynamic=dynamic([]),
@@ -5373,52 +5331,42 @@ parser (
     disabled                 = disabled
 )
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_Authentication() {
     ASimAuthentication
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_Dns() {
     ASimDns
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_NetworkSession() {
     ASimNetworkSession
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_ProcessEvent() {
     ASimProcessEvent
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_ProcessCreate() {
     ASimProcessEventCreate
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_ProcessTerminate() {
     ASimProcessEventTerminate
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_FileEvent() {
     ASimFileEvent
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_RegistryEvent() {
     ASimRegistry
 }
-
 .create-or-alter function with (skipvalidation=true)
     _ASim_AuditEvent() {
     ASimAuditEvent
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_Authentication(
         ['starttime']:datetime=datetime(null),
@@ -5433,7 +5381,6 @@ parser (
         ['pack']:bool=false) {
     imAuthentication(starttime, endtime, username_has_any, targetappname_has_any, srcipaddr_has_any_prefix, srchostname_has_any, eventtype_in, eventresultdetails_in, eventresult, pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_Dns(
         ['starttime']:datetime=datetime(null),
@@ -5447,7 +5394,6 @@ parser (
         ['pack']:bool=false) {
     imDns(starttime, endtime, srcipaddr, domain_has_any, responsecodename, response_has_ipv4, response_has_any_prefix, eventtype, pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_NetworkSession(
         ['starttime']:datetime=datetime(null),
@@ -5462,7 +5408,6 @@ parser (
         ['pack']:bool=false) {
     imNetworkSession(starttime, endtime, srcipaddr_has_any_prefix, dstipaddr_has_any_prefix, ipaddr_has_any_prefix, dstportnumber, hostname_has_any, dvcaction, eventresult, pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_ProcessEvent(
         ['starttime']:datetime=datetime(null),
@@ -5481,7 +5426,6 @@ parser (
         ['eventtype']:string='*') {
     imProcessEvent(starttime, endtime, commandline_has_any, commandline_has_all, commandline_has_any_ip_prefix, actingprocess_has_any, targetprocess_has_any, parentprocess_has_any, actorusername, targetusername, dvcipaddr_has_any_prefix, dvcname_has_any, hashes_has_any, eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_ProcessCreate(
         ['starttime']:datetime=datetime(null),
@@ -5499,7 +5443,6 @@ parser (
         ['eventtype']:string='*') {
     imProcessCreate(starttime, endtime, commandline_has_any, commandline_has_all, commandline_has_any_ip_prefix, actingprocess_has_any, targetprocess_has_any, parentprocess_has_any, targetusername, dvcipaddr_has_any_prefix, dvcname_has_any, hashes_has_any, eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_ProcessTerminate(
         ['starttime']:datetime=datetime(null),
@@ -5516,7 +5459,6 @@ parser (
         ['eventtype']:string='*') {
     imProcessTerminate(starttime, endtime, commandline_has_any, commandline_has_all, commandline_has_any_ip_prefix, actingprocess_has_any, targetprocess_has_any, parentprocess_has_any, actorusername, dvcipaddr_has_any_prefix, dvcname_has_any, eventtype)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_FileEvent(
         ['starttime']:datetime=datetime(null),
@@ -5532,7 +5474,6 @@ parser (
         ['pack']:bool=false) {
     imFileEvent(starttime, endtime, eventtype_in, srcipaddr_has_any_prefix, actorusername_has_any, targetfilepath_has_any, srcfilepath_has_any, hashes_has_any, dvchostname_has_any, disabled, pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_RegistryEvent(
         ['starttime']:datetime=datetime(null),
@@ -5547,7 +5488,6 @@ parser (
         ['pack']:bool=false) {
     imRegistry(starttime, endtime, eventtype_in, actorusername_has_any, registrykey_has_any, registryvalue_has_any, registrydata_has_any, dvchostname_has_any, disabled, pack)
 }
-
 .create-or-alter function with (skipvalidation=true)
     _Im_AuditEvent(
         ['starttime']:datetime=datetime(null),
@@ -5562,104 +5502,6 @@ parser (
         ['pack']:bool=false) {
     imAuditEvent(starttime, endtime, srcipaddr_has_any_prefix, actorusername_has_any, operation_has_any, eventtype_in, eventresult, object_has_any, newvalue_has_any, pack)
 }
-
-.alter table Corelight_CL policy roworder (TimeGenerated asc)
-
-.alter table Corelight_CL policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table Corelight_CL policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter table DeviceEvents policy roworder (Timestamp asc)
-
-.alter table DeviceEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table DeviceEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter column DeviceEvents.DeviceId policy encoding type = 'Identifier'
-
-.alter column DeviceEvents.AccountSid policy encoding type = 'Identifier'
-
-.alter column DeviceEvents.AccountObjectId policy encoding type = 'Identifier'
-
-.alter column DeviceEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
-
-.alter column DeviceEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
-
-.alter table DeviceProcessEvents policy roworder (Timestamp asc)
-
-.alter table DeviceProcessEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table DeviceProcessEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter column DeviceProcessEvents.DeviceId policy encoding type = 'Identifier'
-
-.alter column DeviceProcessEvents.AccountSid policy encoding type = 'Identifier'
-
-.alter column DeviceProcessEvents.AccountObjectId policy encoding type = 'Identifier'
-
-.alter column DeviceProcessEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
-
-.alter column DeviceProcessEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
-
-.alter table DeviceNetworkEvents policy roworder (Timestamp asc)
-
-.alter table DeviceNetworkEvents policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table DeviceNetworkEvents policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter column DeviceNetworkEvents.DeviceId policy encoding type = 'Identifier'
-
-.alter column DeviceNetworkEvents.InitiatingProcessAccountSid policy encoding type = 'Identifier'
-
-.alter column DeviceNetworkEvents.InitiatingProcessAccountObjectId policy encoding type = 'Identifier'
-
-.alter table SecurityEvent policy roworder (TimeGenerated asc, EventID asc)
-
-.alter table SecurityEvent policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table SecurityEvent policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter column SecurityEvent.SubjectUserSid policy encoding type = 'Identifier'
-
-.alter column SecurityEvent.TargetUserSid policy encoding type = 'Identifier'
-
-.alter column SecurityEvent.LogonGuid policy encoding type = 'Identifier'
-
-.alter column SecurityEvent.SourceComputerId policy encoding type = 'Identifier'
-
-.alter column SecurityEvent.EventOriginId policy encoding type = 'Identifier'
-
-.alter table Suricata_CL policy roworder (TimeGenerated asc)
-
-.alter table Suricata_CL policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table Suricata_CL policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter table WindowsEvent policy roworder (TimeGenerated asc, Provider asc, EventID asc)
-
-.alter table WindowsEvent policy merge @'{"AllowRebuild": true, "AllowMerge": true}'
-
-.alter table WindowsEvent policy ingestionbatching @'{"MaximumBatchingTimeSpan": "00:00:30", "MaximumNumberOfItems": 500, "MaximumRawDataSizeMB": 1024}'
-
-.alter column WindowsEvent.SystemUserId policy encoding type = 'Identifier'
-
-.alter column WindowsEvent.EventOriginId policy encoding type = 'Identifier'
-
-.alter column WindowsEvent.TenantId policy encoding type = 'Identifier'
-
-.alter table Corelight_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table DeviceEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table DeviceProcessEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table DeviceNetworkEvents policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table SecurityEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table Suricata_CL policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
-
-.alter table WindowsEvent policy retention @'{"SoftDeletePeriod": "30.00:00:00"}'
 .ingest async into table Corelight_CL (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/ksldump/Corelight_CL.parquet') with (format='parquet')
 .ingest async into table DeviceEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/ksldump/DeviceEvents.parquet') with (format='parquet')
 .ingest async into table DeviceNetworkEvents (@'https://raw.githubusercontent.com/ksyeung/DetLabs/refs/heads/main/ksldump/DeviceNetworkEvents.parquet') with (format='parquet')
