@@ -422,7 +422,7 @@ let ASIM_GetUsernameType = (username:string) {
         "Simple"
     )
 };
-ASIM_GetUsernameType (username)
+ASIM_GetUsernameType(username)
 }
 .create-or-alter function with (skipvalidation=true, docstring="An ASIM function sets the UserType for Windows systems based on the username and sid", folder="ASIM")
     _ASIM_GetWindowsUserType(username:string, sid:string)
