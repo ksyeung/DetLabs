@@ -1926,10 +1926,31 @@ union
 }
 .create-or-alter function with (skipvalidation=true) ASimAuthenticationM365Defender(    ['disabled']:bool=false)
 {
+let EventResultDetailsLookup=datatable(EventOriginalResultDetails:string, EventResultDetails:string)
+[
+  'InvalidUserNameOrPassword','No such user or password'
+];
+let EventSubTypeLookup = datatable (EventOriginalType:string, EventSubType:string)
+[
+  'Batch',                            'Service',
+  'CachedInteractive',                'Interactive',
+  'Interactive',                      'Interactive',
+  'Network',                          'Remote',
+  'Remote interactive (RDP) logons',  'RemoteInteractive',
+  'RemoteInteractive',                'RemoteInteractive',
+  'Service',                          'Service',
+  'Unknown',                          ''
+];
+let EventResultLookup = datatable (ActionType:string, EventResult:string)
+[
+  'LogonAttempted', 'NA',
+  'LogonFailed',    'Failure',
+  'LogonSuccess',   'Success'
+];
 let parser = (
   disabled: bool=false) {
 let UnixDeviceLogonEvents = (disabled: bool=false) {
-    union (
+    union isfuzzy=true (
     DeviceLogonEvents
     | where not(disabled)
     | where InitiatingProcessFolderPath startswith "/")
@@ -1942,12 +1963,10 @@ let UnixDeviceLogonEvents = (disabled: bool=false) {
         TargetUsername     = AccountName
     | project-away
         InitiatingProcessAccountSid, AccountDomain, InitiatingProcessAccountDomain, InitiatingProcessFileName, AccountSid
-    )
 };
 let WindowsDeviceLogonEvents = (disabled: bool=false) {
     union isfuzzy=true (
     DeviceLogonEvents
-    | where not(disabled)
     | where InitiatingProcessFolderPath !startswith "/")
     | extend
         ActingProcessName           = strcat (InitiatingProcessFolderPath,'\\',InitiatingProcessFileName),
@@ -1981,7 +2000,6 @@ let WindowsDeviceLogonEvents = (disabled: bool=false) {
             _ASIM_GetWindowsUserType (TargetUsername, TargetUserId)
         )
     | project-away InitiatingProcessAccountName, InitiatingProcessAccountDomain, AccountDomain, AccountName, InitiatingProcessFolderPath, InitiatingProcessFileName
-    )
 };
 union
     WindowsDeviceLogonEvents (disabled=disabled),
@@ -2020,7 +2038,7 @@ union
     SrcIpAddr                   = iff (RemoteIP == '-', '', RemoteIP),
     TargetDvcIdType             = 'MDEid',
     TargetSessionId             = tostring (LogonId),
-    AdditionalFields            = todynamic(AdditionalFields),
+    AdditionalFields            = AdditionalFields,
     Type                        = "DeviceLogonEvents",
     Hash = coalesce(
         ActingProcessMD5,
@@ -2057,8 +2075,7 @@ union
     "ActingProcessId", ActingProcessId
   )
 | extend
-    AdditionalFields = bag_merge(AdditionalFields, UnnormalizedFields)
-| extend
+    AdditionalFields = bag_merge(AdditionalFields, UnnormalizedFields),
     ActingAppName = ActingProcessName,  ActingAppType = "Process",
     Dvc           = coalesce (TargetFQDN, TargetHostname),
     IpAddr        = SrcIpAddr,
@@ -2346,7 +2363,7 @@ let SecEventLogon=(disabled: bool=false) {
         TargetDomainName,
         TargetDvcHostname
 };
-union
+union isfuzzy=true
     SecEventLogon(disabled=disabled),
     WinLogon(disabled=disabled)
 }
@@ -3069,7 +3086,7 @@ let SecEventLogon =(starttime: datetime=datetime(null),
         TargetDomainName,
         TargetDvcHostname
 };
-union SecEventLogon(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, disabled=disabled),
+union isfuzzy=true SecEventLogon(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, disabled=disabled),
                 WinLogon(starttime=starttime, endtime=endtime, username_has_any=username_has_any, targetappname_has_any=targetappname_has_any, srcipaddr_has_any_prefix=srcipaddr_has_any_prefix, srchostname_has_any=srchostname_has_any, eventtype_in=eventtype_in, eventresultdetails_in=eventresultdetails_in, eventresult=eventresult, disabled=disabled)
 }
 .create-or-alter function with (skipvalidation=true) ASimDns(    ['pack']:bool=false)
@@ -3539,9 +3556,10 @@ union
 }
 .create-or-alter function with (skipvalidation=true) ASimFileEventMicrosoft365D(    ['disabled']:bool=false)
 {
+let protocols = dynamic(['smb']);
 let parser=(disabled:bool=false){
     let remote_events =
-        union (
+        union isfuzzy=true (
         DeviceFileEvents
         | where not(disabled)
         | where isnotempty(RequestAccountName))
@@ -3563,12 +3581,10 @@ let parser=(disabled:bool=false){
             TargetUserId = coalesce(TargetUserAadId, TargetUserSid),
             TargetUserIdType = iff(isempty(TargetUserSid), 'AADID', 'SID'),
             IpAddr = SrcIpAddr, Src = SrcIpAddr
-        )
     ;
     let local_events =
         union isfuzzy=true (
         DeviceFileEvents
-        | where not(disabled)
         | where isempty(RequestAccountName))
         | project-rename
             ActorUserSid = InitiatingProcessAccountSid,
@@ -3578,7 +3594,6 @@ let parser=(disabled:bool=false){
             ActorWindowsUsername = strcat(InitiatingProcessAccountDomain, '\\', InitiatingProcessAccountName),
             ActorUserType = _ASIM_GetWindowsUserType(strcat(InitiatingProcessAccountDomain, '\\', InitiatingProcessAccountName), ActorUserSid)
         | project-away RequestAccountSid, RequestSourceIP
-        )
     ;
     union
         remote_events
@@ -3602,7 +3617,7 @@ let parser=(disabled:bool=false){
         SrcFileName = PreviousFileName
     | extend
         DvcOs = iff(FolderPath startswith "/", "Linux", "Windows"),
-        TargetFileSize = tolong(FileSize),            EventCount = int(1),
+        TargetFileSize = FileSize,            EventCount = int(1),
         EventOriginalUid = tostring(ReportId),
         ActingProcessId = tostring(InitiatingProcessId),
         EventStartTime = Timestamp,                   EventEndTime= Timestamp,
@@ -6332,7 +6347,7 @@ let RegistryType = datatable (TypeCode: string, TypeName: string)
 let parser = (
     disabled: bool=false
     ) {
-    union (
+    union isfuzzy=true (
     DeviceRegistryEvents
     | where not(disabled))
     | extend
@@ -6392,7 +6407,6 @@ let parser = (
         ReportId,
         ActionType,
         RegistryValueName
-    )
 };
 parser (
     disabled = disabled
