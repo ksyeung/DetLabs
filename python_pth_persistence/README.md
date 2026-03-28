@@ -1,3 +1,6 @@
+> [!WARNING]
+> Please see https://detection.wiki/labs/python-pth-persistence for the most up to date version of this page.
+
 # How do I use this?
 Go to https://dataexplorer.azure.com, then create a free ADX cluster account and a new database. Copy the [init.kql](https://github.com/ksyeung/DetLabs/blob/main/python_pth_persistence/init.kql) data in this folder and paste it into the ADX web UI query window. This will create the required tables, ASIM parsers, helper functions, and start ingestion of the telemetry (WindowsEvent[...].parquet, etc).
 
